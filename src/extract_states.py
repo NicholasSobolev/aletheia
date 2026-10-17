@@ -1,5 +1,5 @@
 import json
-import os
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -7,7 +7,11 @@ from numpy.typing import NDArray
 
 from experiment import DEVICE, build_prompt, load_model
 
-with open("flip_results.json", "r", encoding="utf-8") as file:
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = PROJECT_ROOT / "data"
+STATES_DIR = PROJECT_ROOT / "states"
+
+with (DATA_DIR / "flip_results.json").open("r", encoding="utf-8") as file:
     items = json.load(file)
 
 tokenizer, model = load_model()
@@ -46,11 +50,11 @@ CONDITIONS = [
     "unattributed_wrong",
 ]
 
-os.makedirs("states", exist_ok=True)
+STATES_DIR.mkdir(exist_ok=True)
 
 for condition in CONDITIONS:
     prompts = [build_prompt(item, condition, tokenizer) for item in items]
     activations = extract_states(prompts)
 
-    np.save(f"states/{condition}.npy", activations)
+    np.save(STATES_DIR / f"{condition}.npy", activations)
     print(condition, activations.shape, flush=True)

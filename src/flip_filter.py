@@ -1,12 +1,15 @@
 import json
 import random
 import sys
+from pathlib import Path
 
 import torch
 from datasets import load_dataset
 
 from experiment import DEVICE, LETTERS, TEMPLATES, build_prompt, load_model
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = PROJECT_ROOT / "data"
 NUM_QUESTIONS = int(sys.argv[1]) if len(sys.argv) > 1 else 2000 # use a small N first, e.g 64
 SEED = 0
 random.seed(SEED); torch.manual_seed(SEED)
@@ -163,5 +166,6 @@ for template_name in TEMPLATES:
     )
     print(f"{template_name}: {format_percentage(rescued, len(neutral_incorrect))}")
 
-with open("flip_results.json", "w", encoding="utf-8") as file:
+DATA_DIR.mkdir(exist_ok=True)
+with (DATA_DIR / "flip_results.json").open("w", encoding="utf-8") as file:
     json.dump(items, file, indent=2)

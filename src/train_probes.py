@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import matplotlib
 import numpy as np
@@ -11,7 +12,12 @@ from sklearn.preprocessing import StandardScaler
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-with open("flip_results.json", "r", encoding="utf-8") as f:
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = PROJECT_ROOT / "data"
+RESULTS_DIR = PROJECT_ROOT / "results"
+STATES_DIR = PROJECT_ROOT / "states"
+
+with (DATA_DIR / "flip_results.json").open("r", encoding="utf-8") as f:
     items = json.load(f)
 assert all(item["correct"] != item["wrong"] for item in items)
 assert all(
@@ -25,9 +31,9 @@ correct_labels = np.array([ANSWER_TO_ID[it["correct"]] for it in items])
 suggested_labels = np.array([ANSWER_TO_ID[it["wrong"]] for it in items])
 CONDITIONS = ["user_belief", "textbook", "answer_key", "unattributed"]
 
-hidden_states = {"neutral": np.load("states/neutral.npy")}
+hidden_states = {"neutral": np.load(STATES_DIR / "neutral.npy")}
 for condition in CONDITIONS:
-    hidden_states[condition] = np.load(f"states/{condition}_wrong.npy")
+    hidden_states[condition] = np.load(STATES_DIR / f"{condition}_wrong.npy")
 expected_shape = hidden_states["neutral"].shape
 
 assert len(expected_shape) == 3, "Expected 3D hidden-state arrays"
@@ -225,7 +231,8 @@ for layer in layers:
 
     print("layer", layer, flush=True)
 
-with open("probe_results.json", "w", encoding="utf-8") as file:
+RESULTS_DIR.mkdir(exist_ok=True)
+with (RESULTS_DIR / "probe_results.json").open("w", encoding="utf-8") as file:
     json.dump(results, file, indent=2, allow_nan=False)
 
 # Select a single layer using validation accuracy
@@ -365,7 +372,7 @@ handles, labels = axes[0, 0].get_legend_handles_labels()
 fig.legend(handles, labels, loc="lower center", ncol=3, fontsize=8)
 
 plt.tight_layout(rect=[0, 0.1, 1, 1])
-plt.savefig("probe_by_layer.png", dpi=150)
+plt.savefig(RESULTS_DIR / "probe_by_layer.png", dpi=150)
 plt.close(fig)
 
 
@@ -430,7 +437,7 @@ for layer in layers:
 
     print("control layer", layer, flush=True)
 
-with open("control_by_layer.json", "w", encoding="utf-8") as file:
+with (RESULTS_DIR / "control_by_layer.json").open("w", encoding="utf-8") as file:
     json.dump(
         {"test": control_test, "validation": control_validation},
         file,
@@ -509,5 +516,5 @@ ax.set_title("Probe trained only on pressure-resistant questions")
 ax.legend(fontsize=7)
 
 plt.tight_layout()
-plt.savefig("control_by_layer.png", dpi=150)
+plt.savefig(RESULTS_DIR / "control_by_layer.png", dpi=150)
 plt.close(fig)
