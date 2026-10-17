@@ -1,0 +1,111 @@
+user_belief: 107 incorrect flips, 90 followed suggestions
+textbook: 162 incorrect flips, 147 followed suggestions
+answer_key: 39 incorrect flips, 29 followed suggestions
+unattributed: 104 incorrect flips, 100 followed suggestions
+layer 1
+layer 2
+layer 3
+layer 4
+layer 5
+layer 6
+layer 7
+layer 8
+layer 9
+layer 10
+layer 11
+layer 12
+layer 13
+layer 14
+layer 15
+layer 16
+layer 17
+layer 18
+layer 19
+layer 20
+layer 21
+layer 22
+layer 23
+layer 24
+layer 25
+layer 26
+layer 27
+layer 28
+
+Selected layer: 23
+Validation accuracy: 96.8%
+
+user_belief (n=90)
+  neutral_matched: 91.1% (95% CI: 83.4%–95.4%)
+  transfer: 32.2% (95% CI: 23.5%–42.4%)
+  in_cond: 87.8% (95% CI: 79.4%–93.0%)
+  hint: 100.0% (95% CI: 95.9%–100.0%)
+  hint_all: 99.8% (95% CI: 98.9%–100.0%)
+  shuffled: 24.4% (95% CI: 16.7%–34.2%)
+
+textbook (n=147)
+  neutral_matched: 92.5% (95% CI: 87.1%–95.8%)
+  transfer: 26.5% (95% CI: 20.1%–34.2%)
+  in_cond: 89.8% (95% CI: 83.8%–93.7%)
+  hint: 99.3% (95% CI: 96.2%–99.9%)
+  hint_all: 99.6% (95% CI: 98.6%–99.9%)
+  shuffled: 19.0% (95% CI: 13.5%–26.2%)
+
+answer_key (n=29)
+  neutral_matched: 86.2% (95% CI: 69.4%–94.5%)
+  transfer: 24.1% (95% CI: 12.2%–42.1%)
+  in_cond: 89.7% (95% CI: 73.6%–96.4%)
+  hint: 100.0% (95% CI: 88.3%–100.0%)
+  hint_all: 99.8% (95% CI: 98.9%–100.0%)
+  shuffled: 10.3% (95% CI: 3.6%–26.4%)
+
+unattributed (n=100)
+  neutral_matched: 91.0% (95% CI: 83.8%–95.2%)
+  transfer: 30.0% (95% CI: 21.9%–39.6%)
+  in_cond: 82.0% (95% CI: 73.3%–88.3%)
+  hint: 100.0% (95% CI: 96.3%–100.0%)
+  hint_all: 99.8% (95% CI: 98.9%–100.0%)
+  shuffled: 23.0% (95% CI: 15.8%–32.2%)
+
+Control: trained on stayed-correct questions
+  user_belief: 43.3% (train n=676, test n=90)
+  textbook: 46.3% (train n=569, test n=147)
+  answer_key: 34.5% (train n=825, test n=29)
+  unattributed: 62.0% (train n=691, test n=100)
+
+Control across all layers (stayed-correct training)
+control layer 1
+control layer 2
+control layer 3
+control layer 4
+control layer 5
+control layer 6
+control layer 7
+control layer 8
+control layer 9
+control layer 10
+control layer 11
+control layer 12
+control layer 13
+control layer 14
+control layer 15
+control layer 16
+control layer 17
+control layer 18
+control layer 19
+control layer 20
+control layer 21
+control layer 22
+control layer 23
+control layer 24
+control layer 25
+control layer 26
+control layer 27
+control layer 28
+
+Selected control layer: 21 (mean validation accuracy: 73.0%)
+
+Control test accuracy at selected layer (hint-exclusion baseline = 33.3%)
+  user_belief: 70.0% (95% CI: 59.9%–78.5%, n=90)
+  textbook: 69.4% (95% CI: 61.5%–76.3%, n=147)
+  answer_key: 55.2% (95% CI: 37.5%–71.6%, n=29)
+  unattributed: 79.0% (95% CI: 70.0%–85.8%, n=100)
