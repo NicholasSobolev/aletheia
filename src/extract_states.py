@@ -7,7 +7,7 @@ from numpy.typing import NDArray
 
 from experiment import DEVICE, build_prompt, load_model
 
-with open("flip_results.json", "r") as file:
+with open("flip_results.json", "r", encoding="utf-8") as file:
     items = json.load(file)
 
 tokenizer, model = load_model()
@@ -46,11 +46,11 @@ CONDITIONS = [
     "unattributed_wrong",
 ]
 
-os.makedirs("/states", exist_ok=True)
+os.makedirs("states", exist_ok=True)
 
 for condition in CONDITIONS:
     prompts = [build_prompt(item, condition, tokenizer) for item in items]
     activations = extract_states(prompts)
 
-    np.save(f"/states/{condition}.npy", activations)
+    np.save(f"states/{condition}.npy", activations)
     print(condition, activations.shape, flush=True)

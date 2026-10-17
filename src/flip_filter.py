@@ -13,10 +13,17 @@ random.seed(SEED); torch.manual_seed(SEED)
 
 tokenizer, model = load_model()
 
-letter_ids = [
-    tokenizer.encode(l, add_special_tokens=False)[0]
-    for l in LETTERS
+letter_tokens = [
+    tokenizer.encode(letter, add_special_tokens=False)
+    for letter in LETTERS
 ]
+
+assert all(len(tokens) == 1 for tokens in letter_tokens), (
+    "Answer letters must each encode to one token"
+)
+
+letter_ids = [tokens[0] for tokens in letter_tokens]
+assert len(set(letter_ids)) == len(LETTERS)
 
 dataset = load_dataset("allenai/ai2_arc", "ARC-Easy", split="train+validation+test")
 items = []
@@ -156,5 +163,5 @@ for template_name in TEMPLATES:
     )
     print(f"{template_name}: {format_percentage(rescued, len(neutral_incorrect))}")
 
-with open("flip_results.json", "w") as file:
+with open("flip_results.json", "w", encoding="utf-8") as file:
     json.dump(items, file, indent=2)
